@@ -4,47 +4,36 @@ import { useSignalEffect, useSignal, signal } from '@preact/signals';
 
 
 type MuteButtonProps = {
-  isVisible: boolean;
-  videoPlayerHeight: number | undefined;
+  isMuted: boolean;
 };
 
 const MuteButton: FunctionalComponent<MuteButtonProps> = ({
-  isVisible,
-  videoPlayerHeight,
+  isMuted,
 }) => {
   useEffect(() => {
-    // do nothing
-  }, [isVisible, videoPlayerHeight]);
+    console.log('isMuted', isMuted);
+  }, [isMuted]);
 
-  return (
-    <button>
-      Mute
-    </button>
-  );
+  return null;
 };
 
 export const muteVideo = signal(false);
-
-const TestPlayer: FunctionalComponent = (
-
-) => {
-  const videoPlayerWrapRef = useRef<HTMLDivElement>(null);
+const TestPlayer: FunctionalComponent = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-
   useSignalEffect(() => {
     videoRef.current!.muted = muteVideo.value;
   });
 
   return (
     <Fragment>
-      <div ref={videoPlayerWrapRef}>
+      <div>
         <video
           data-testid='video-player'
           ref={videoRef}>
         </video>
         <MuteButton
-          isVisible={true}
-          videoPlayerHeight={videoPlayerWrapRef.current?.clientHeight} />
+          isMuted={muteVideo.value} 
+          />
       </div>
     </Fragment>
   );
