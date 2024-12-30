@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "name": "Jest all tests",
+      "request": "launch",
+      "program": "/Users/57block/Work/NeverReact/node_modules/jest/bin/jest",
+      "args": [
+        "--config=jest.config.ts",
+        "--runInBand"
+      ],
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      },
+      "cwd": "/Users/57block/Work/NeverReact",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    },
+    {
+      "type": "node",
+      "name": "Jest current file",
+      "request": "launch",
+      "program": "/Users/57block/Work/NeverReact/node_modules/jest/bin/jest",
+      "args": [
+        "${fileBasenameNoExtension}",
+        "--config=jest.config.ts",
+        "--runInBand"
+      ],
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      },
+      "cwd": "/Users/57block/Work/NeverReact",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    }
+  ]
+}

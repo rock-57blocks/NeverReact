@@ -1,17 +1,27 @@
 
-import { describe, expect, it } from '@jest/globals';
-import { fireEvent, render } from '@testing-library/preact';
-import TestPlayer, { muteVideo } from './test-player';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { render } from '@testing-library/preact';
+import TestPlayer from './test-player';
 import { act } from 'preact/test-utils';
 
-describe('TestPlayer', () => {
-  it('should render', () => {
-    const { getByTestId } = render(<TestPlayer />);
+function setupScratch(id?: string) {
+	const scratch = document.createElement('div');
+	scratch.id = id || 'scratch';
+	(document.body || document.documentElement).appendChild(scratch);
+	return scratch;
+}
 
-    act(() => {
-      muteVideo.value = true;
+describe('TestPlayer', () => {
+  let scratch = document.createElement('div') as HTMLDivElement;
+  beforeEach(() => {
+    scratch = setupScratch();
+  });
+
+  it('should render', async () => {
+    await act(() => {
+      render(<TestPlayer />, { container: scratch });
     });
-    const video = getByTestId('video-player') as HTMLVideoElement;
-    expect(video.muted).toBe(true);
+    const video = scratch.firstChild as HTMLVideoElement;
+    expect(video.src).toBe('https://hlsurl.com/');
   });
 });

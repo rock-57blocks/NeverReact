@@ -3,41 +3,34 @@ import { useEffect, useRef } from 'preact/hooks';
 import { useSignalEffect, useSignal, signal } from '@preact/signals';
 
 
-type MuteButtonProps = {
-  isMuted: boolean;
-};
-
-const MuteButton: FunctionalComponent<MuteButtonProps> = ({
-  isMuted,
-}) => {
-  useEffect(() => {
-    console.log('isMuted', isMuted);
-  }, [isMuted]);
-
-  return null;
-};
-
-export const muteVideo = signal(false);
 const TestPlayer: FunctionalComponent = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hlsUrl = useSignal('');
+
+  useEffect(() => {
+    const getHlsUrl = async () => {
+      console.log('getHlsUrl');
+      const url = await new Promise<string>((resolve) => {
+        resolve('https://hlsurl.com/');
+      });
+      console.log('url', url);
+      hlsUrl.value = url;
+    };
+
+    getHlsUrl();
+  }, []);
+
   useSignalEffect(() => {
-    videoRef.current!.muted = muteVideo.value;
+    console.log('useSignalEffect');
+    videoRef.current!.src = hlsUrl.value;
   });
 
   return (
-    <Fragment>
-      <div>
-        <video
-          data-testid='video-player'
-          ref={videoRef}>
-        </video>
-        <MuteButton
-          isMuted={muteVideo.value} 
-          />
-      </div>
-    </Fragment>
+    <video
+      data-testid='video-player'
+      ref={videoRef}>
+    </video>
   );
-
 };
 
 export default TestPlayer;
