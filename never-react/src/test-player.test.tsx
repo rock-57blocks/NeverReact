@@ -9,6 +9,7 @@ describe('TestPlayer', () => {
     const { getByTestId } = render(<TestPlayer />);
 
     act(() => {
+      console.log('act: set muteVideo to be', true)
       muteVideo.value = true;
     });
     const video = getByTestId('video-player') as HTMLVideoElement;
